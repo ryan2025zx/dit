@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[margin=64pt]{geometry} % 控制全局格式信息
+\usepackage{graphicx} % 引入图片信息
+\usepackage{xcolor} % 引入颜色控制
+\usepackage{amsmath} % 引入额外的数学功能
+\usepackage{amssymb} % 引入额外的数学符号
+\usepackage{listings} % 插入代码
+\usepackage{float} % 取消浮动
+\usepackage{enumitem} % 个性化enumerate的项
+\usepackage{pifont} % 可以输入定制化符号
+\usepackage[utf8]{inputenc} % 引入table of contents
+
+\setlist[enumerate]{itemsep=0pt, parsep=0pt} 
+% \setcounter{secnumdepth}{0} % 取消section序号
+\setlength{\parindent}{0pt} % 取消全文首行缩进
+
+\newcommand{\ztitle}[1]{
+    \begin{center}
+        {\fontsize{28pt}{36pt}\selectfont\textbf{#1}}
+    \end{center}
+}
+
+\newcommand{\zinfo}[3]{
+    \vspace{24pt}
+    \colorbox{gray!30}{
+        \parbox{\dimexpr\linewidth-38pt}{
+            \begin{tabular}{@{}l@{\hspace{24pt}}l@{}}
+                \textbf{Student Name:} & #1 \\
+                \textbf{Student ID:} & #2 \\
+                \textbf{Student Email:} & #3 \\
+            \end{tabular}
+        }
+    }
+    \vspace{24pt}
+}
+
+\lstset{
+    language=Python,
+    backgroundcolor=\color{black},
+    basicstyle=\color{green}\ttfamily,
+    commentstyle=\color{yellow},
+    morecomment=[l]{\#}, % 这个设置是用来额外指定或修改注释的识别方式。morecomment 字段允许你定义更多的注释样式。在这个例子中，[l]{\#} 表示以 # 字符开始的行为单行注释。[l] 代表“line comment”，即该符号后面到行末的文本都被视为注释。
+    breaklines=true,
+}
+
+% \lstset{
+%     backgroundcolor=\color{gray!10}, % 设置代码背景颜色
+%     basicstyle=\ttfamily\small,      % 设置代码的基本样式
+%     breaklines=true,                 % 代码过长时自动换行
+%     captionpos=b,                    % 标题位置（b表示底部）
+%     keepspaces=true,                 % 保持空格不被忽略
+%     numbers=left,                    % 行号显示在左侧
+%     numberstyle=\tiny\color{gray},   % 行号的样式
+%     showstringspaces=false,          % 字符串中显示空格
+%     frame=single,                    % 代码周围显示框架
+%     language=python                  % 默认语言设置为bash
+% }
+
+% 此处开始,设置cmark和xmark
+\newlength{\dingwidth}
+\settowidth{\dingwidth}{\ding{55}} % 初始化宽度，通常选取最宽的一个
+
+\newcommand{\uniformding}[1]{\makebox[\dingwidth][c]{#1}} % 创建等宽盒子命令
+
+\newcommand{\cmark}{\uniformding{\ding{51}}} % 使用 \uniformding 使 \ding{51} 等宽
+\newcommand{\xmark}{\uniformding{\ding{55}}} % 使用 \uniformding 使 \ding{55} 等宽
+% 此处结束,设置cmark和xmark
