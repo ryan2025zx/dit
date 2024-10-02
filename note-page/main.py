@@ -1,7 +1,7 @@
 from fpdf import FPDF
 
 # Function to create a PDF with a refined grid pattern, a light green background, and a cross-shaped darker central area
-def create_refined_grid_notebook(page_count=1, filename="grid_notebook.pdf"):
+def create_refined_grid_notebook(page_count=10, filename="grid_notebook.pdf"):
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     
     # Adding pages with a refined grid and varied background colors
@@ -10,7 +10,7 @@ def create_refined_grid_notebook(page_count=1, filename="grid_notebook.pdf"):
         print(f"Creating page {page_number+1}")  # Debug output
         
         # Set the background color to light green
-        pdf.set_fill_color(204, 255, 204)  # Light green
+        pdf.set_fill_color(236, 255, 236)  # Light green
         pdf.rect(0, 0, 210, 297, 'F')  # Fill the entire page
         
         # Darken the central cross-shaped area
@@ -26,7 +26,7 @@ def create_refined_grid_notebook(page_count=1, filename="grid_notebook.pdf"):
         pdf.rect(0, vertical_start, 210, cross_width, 'F')
         
         # Draw smaller grid cells
-        small_grid_size = 5  # 5mm small grid cells
+        small_grid_size = 2  # 5mm small grid cells
 
         # Set light gray for normal grid lines
         pdf.set_draw_color(200, 200, 200)  # Light gray color
@@ -36,7 +36,7 @@ def create_refined_grid_notebook(page_count=1, filename="grid_notebook.pdf"):
             pdf.line(i, 0, i, 297)
         
         # Set black for thick grid lines
-        pdf.set_draw_color(0, 0, 0)
+        pdf.set_draw_color(127, 127, 127)
         thick_line_interval = 4  # Every 4 small cells, there's a thicker line
         for i in range(0, 297 + small_grid_size, small_grid_size * thick_line_interval):  # Horizontal thick lines
             pdf.line(0, i, 210, i)
@@ -48,3 +48,4 @@ def create_refined_grid_notebook(page_count=1, filename="grid_notebook.pdf"):
     print("PDF generation complete.")  # Confirm completion
 
 # Example: Create a PDF with 10 pages of refined grid pattern with a light green background
+create_refined_grid_notebook()
