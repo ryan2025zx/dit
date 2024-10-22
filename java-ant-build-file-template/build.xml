@@ -1,0 +1,51 @@
+<project>
+
+    <!-- store 3rd party libraries -->
+    <property name="lib.dir" value="lib"/>
+
+    <!-- store source code -->
+    <property name="src.dir" value="src"/>
+
+    <!-- store built files -->
+    <property name="build.dir" value="build"/>
+
+    <!-- store built java class files -->
+    <property name="class.dir" value="${build.dir}/class"/>
+
+    <!-- store generated runnable jar files -->
+    <property name="jar.dir" value="jar"/>
+
+    <!-- dependency paths for 3rd party libs-->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- commands -->
+
+    <!-- initialize the folders -->
+    <target name="init">
+        <mkdir dir="${class.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <!-- compile src into .class files -->
+    <!-- have to manually address dependency issues within src -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="classpath"/>
+    </target>
+
+    <!-- group compiled files into jars -->
+    <target name="jar" depends="compile">
+        <!-- each jar has a jar command -->
+        <jar destfile="${jar.dir}/<JAR_NAME>.jar" basedir="${class.dir}">
+            <!-- add 3rd party dependencies -->
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="<PACKAGE_NAME>.<JAR_NAME>"/>
+            </manifest>
+        </jar>
+    </target>
+
+</project>

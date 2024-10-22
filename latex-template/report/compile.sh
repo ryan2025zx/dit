@@ -1,21 +1,29 @@
 #!/bin/bash
 
-# 设置文件名变量
-filename="report"
+# Set filename variable
+filename="COMP90043-research-project-report"
 
-# 编译 LaTeX 文件
-# 编译两次是为了让tableofcontents出现
-for arg in "$@"; do
-    if [[ "$arg" == "toc" ]]; then
-        echo "Argument 'toc' found, executing the command."
-        # 在这里执行你想运行的命令
-        pdflatex "${filename}.tex"
-        break  # 找到后就跳出循环，不再检查其他参数
-    fi
-done
-xelatex "${filename}.tex"
+# First compilation to generate auxiliary files
+echo "Running first compilation to generate auxiliary files..."
+xelatex -interaction=nonstopmode "${filename}.tex"
 
-# 检查编译是否成功
+# Check if biber is needed for bibliography processing
+if grep -q "\\printbibliography" "${filename}.tex" || grep -q "\\addbibresource" "${filename}.tex"; then
+    echo "Running biber for references..."
+    biber "${filename}"
+fi
+
+# Second compilation to update references and TOC
+echo "Running second compilation..."
+xelatex -interaction=nonstopmode "${filename}.tex"
+
+# Check .log file for unresolved references to decide if third compilation is needed
+if grep -q "Rerun to get cross-references right" "${filename}.log"; then
+    echo "Running third compilation to finalize cross-references and TOC..."
+    xelatex -interaction=nonstopmode "${filename}.tex"
+fi
+
+# Check if the last compilation was successful
 if [ $? -eq 0 ]; then
     echo "Compilation successful."
 else
@@ -23,7 +31,7 @@ else
     exit 1
 fi
 
-# 删除生成的中间文件
-rm -f "${filename}.aux" "${filename}.log" "${filename}.out" "${filename}.toc" "${filename}.lof" "${filename}.lot"
+# Remove generated intermediate files, keep necessary files for debugging
+rm -f "${filename}.aux" "${filename}.bbl" "${filename}.blg" "${filename}.bcf" "${filename}.log" "${filename}.out" "${filename}.toc" "${filename}.lof" "${filename}.lot" "${filename}.run.xml"
 
 echo "Clean up complete."

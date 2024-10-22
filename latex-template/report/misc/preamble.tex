@@ -9,6 +9,9 @@
 \usepackage{enumitem} % 个性化enumerate的项
 \usepackage{pifont} % 可以输入定制化符号
 \usepackage[utf8]{inputenc} % 引入table of contents
+\usepackage[backend=biber,style=numeric]{biblatex}  % 使用biblatex来实现参考文献的引用
+\addbibresource{content/references.bib}  % 使用 .bib 文件
+\usepackage{pxfonts} % lstlisting 环境关键字加粗
 
 \setlist[enumerate]{itemsep=0pt, parsep=0pt} 
 % \setcounter{secnumdepth}{0} % 取消section序号
@@ -34,13 +37,27 @@
     \vspace{24pt}
 }
 
+% \lstset{
+%     language=Python,
+%     backgroundcolor=\color{black},
+%     basicstyle=\color{green}\ttfamily,
+%     commentstyle=\color{yellow},
+%     morecomment=[l]{\#}, % 这个设置是用来额外指定或修改注释的识别方式。morecomment 字段允许你定义更多的注释样式。在这个例子中，[l]{\#} 表示以 # 字符开始的行为单行注释。[l] 代表“line comment”，即该符号后面到行末的文本都被视为注释。
+%     breaklines=true,
+% }
+
+\renewcommand{\lstlistingname}{Code}
 \lstset{
-    language=Python,
-    backgroundcolor=\color{black},
-    basicstyle=\color{green}\ttfamily,
-    commentstyle=\color{yellow},
-    morecomment=[l]{\#}, % 这个设置是用来额外指定或修改注释的识别方式。morecomment 字段允许你定义更多的注释样式。在这个例子中，[l]{\#} 表示以 # 字符开始的行为单行注释。[l] 代表“line comment”，即该符号后面到行末的文本都被视为注释。
-    breaklines=true,
+    language=Python,         % 设置语言
+    basicstyle=\ttfamily,     % 设置基本字体样式为等宽字体
+    commentstyle=\itshape,    % 设置注释为斜体
+    keywordstyle=\bfseries,   % 设置关键词为粗体
+    breaklines=true,          % 自动换行
+    frame=single,             % 添加边框
+    numbers=left,             % 在左侧显示行号
+    numberstyle=\tiny,        % 行号的字体大小
+    tabsize=4,                % 设置Tab为4个空格
+    showstringspaces=false,   % 不显示字符串中的空格
 }
 
 % \lstset{
