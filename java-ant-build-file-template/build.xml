@@ -26,6 +26,7 @@
 
     <!-- initialize the folders -->
     <target name="init">
+        <mkdir dir="${lib.dir}"/>
         <mkdir dir="${class.dir}"/>
         <mkdir dir="${jar.dir}"/>
     </target>
